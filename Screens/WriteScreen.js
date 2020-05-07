@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,View,TextInput,StyleSheet,TouchableOpacity,Alert, KeyboardAvoidingView} from 'react-native';
+import {Text,View,TextInput,StyleSheet,TouchableOpacity,Alert, KeyboardAvoidingView,ToastAndroid} from 'react-native';
 import db from '../config';
 import firebase from 'firebase';
 
@@ -15,7 +15,7 @@ export default class WriteScreen extends React.Component{
         }
 
         submitStory = async ()=>{
-            db.collection("WrittenStory").add({
+            db.collection("WrittenStory") .add({
               'StoryText' : this.state.writtenStory,
               'date'   : firebase.firestore.Timestamp.now().toDate(),
               'Author': this.state.writtenAuthor,
@@ -26,14 +26,13 @@ export default class WriteScreen extends React.Component{
             writtenTitle:'',
             writtenAuthor:'',
             })
-            alert("SUCCESSFULLY UPDATED STORY TO DATABASE!");
+            ToastAndroid.show("Succesfully updated the story!", ToastAndroid.SHORT);
           }
 
 
     render(){
         return(
           <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-            <View style={{justifyContent:'center',flex:1,alignItems:'center'}}>
             <TextInput
                 editable
                 maxLength={70}
@@ -79,7 +78,6 @@ export default class WriteScreen extends React.Component{
                 <Text style={styles.letButton}>Submit</Text>
                 </TouchableOpacity>
             <Text>Write your Story</Text>
-            </View>
             </KeyboardAvoidingView>
         );
     }
@@ -88,7 +86,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
-     alignItems: 'center'
+      alignItems: 'center'
       },
     inputBox:{
         width:"90%",
